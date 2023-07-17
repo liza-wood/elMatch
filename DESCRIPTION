@@ -1,0 +1,15 @@
+Package: elMatch
+Title: Matching students to experiential learning research opportunities
+Version: 0.0.0.9000
+Description: This package brings in data from two Google Forms (student and researcher) to match students and researchers based on skillsets.
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports:
+	stringr,  
+	tabulizer,
+	dplyr  
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
