@@ -23,7 +23,10 @@ Pull the list of projects
 Pull in the applicant data
 
 Read in a sample transcript
-```{r}
-df <- transcript_to_df('data/transcript.pdf')
+```{r, eval = F}
+r_mat <- pull_research_needs(need url)
+s_mat <- pull_student_interest()
+
+proj_list <- identify_top_matches(r_mat, s_mat)
 ```
 

@@ -40,6 +40,7 @@ pull_student_interest <- function(student_url){
   fls <- list.files('transcripts', full.names = T)
 
   # Run transcripts through transcript_to_df function to extract data
+  roxygen2::load_pkgload('R/transcript_to_df.R')
   all_t <- data.frame()
   for(i in fls){
     df <- transcript_to_df(i)

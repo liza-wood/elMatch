@@ -14,6 +14,7 @@
 #' @export
 
 identify_top_matches <- function(r_mat, s_mat){
+  roxygen2::load_pkgload('R/get_match_score.R')
   dt_mat <- get_match_score(r_mat, s_mat, attr = 'datatype')
   sk_mat <- get_match_score(r_mat, s_mat, attr = 'skill')
   co_mat <- get_match_score(r_mat, s_mat, attr = 'course')
@@ -57,23 +58,18 @@ identify_top_matches <- function(r_mat, s_mat){
                                           ifelse(lco == 0,1,lco)),
                                       rep('Disciplinary overlap',
                                           ifelse(ldi == 0,1,ldi))),
-                # I HAVE AN ERROR HERE THAT I CANT FIGURE OUT ##
-                        'Top-students' = c(ifelse(length(dt_best_s) == 0, NA,
-                                                  dt_best_s),
-                                           ifelse(length(sk_best_s) == 0, NA,
-                                                  sk_best_s),
-                                           ifelse(length(co_best_s) == 0, NA,
-                                                  co_best_s),
-                                           ifelse(length(di_best_s) == 0, NA,
-                                                  di_best_s)),
-                        'Scores' = c(ifelse(length(dt_min_score) == 0, NA,
-                                            rep(dt_min_score, ldt)),
-                                     ifelse(length(sk_min_score) == 0, NA,
-                                            rep(sk_min_score, lsk)),
-                                     ifelse(length(co_min_score) == 0, NA,
-                                            rep(co_min_score, lco)),
-                                     ifelse(length(di_min_score) == 0, NA,
-                                            rep(di_min_score, ldi))))
+                        'Top-students' = c(if(length(dt_best_s) == 0){NA} else{dt_best_s},
+                                           if(length(sk_best_s) == 0){NA} else{sk_best_s},
+                                           if(length(co_best_s) == 0){NA} else{co_best_s},
+                                           if(length(di_best_s) == 0){NA} else{di_best_s}),
+                        'Scores' = c(if(length(dt_min_score) == 0){NA} else{
+                                            dt_min_score},
+                                     if(length(sk_min_score) == 0){NA} else{
+                                            sk_min_score},
+                                     if(length(co_min_score) == 0){NA} else{
+                                            co_min_score},
+                                     if(length(di_min_score) == 0){NA} else{
+                                            di_min_score}))
     proj_matches[[i]] <- match
   }
   return(proj_matches)
