@@ -4,7 +4,7 @@
 #'
 #' @param p_mat A matrix of research project needs
 #' @param s_mat A matrix of student interest
-#' @param cutoff
+#' @param cutoff A value 0-3 identifying a lower bound threshold for selecting students. For example, selecting a cutoff value of 2 will show students with match scores >= 2 for each project. cutoff = 0 will display all students, cutoff = 3 will display only perfect matches.
 #'
 #' @examples proj_list <- identify_top_matches(p_mat, s_mat)
 #'
@@ -16,10 +16,10 @@
 
 identify_top_matches <- function(p_mat, s_mat, cutoff){
   #roxygen2::load_pkgload('R/get_match_score.R')
-  dt_mat <- flip_scores(get_match_score(p_mat, s_mat, attr = 'datatype'))
-  sk_mat <- flip_scores(get_match_score(p_mat, s_mat, attr = 'skill'))
-  co_mat <- flip_scores(get_match_score(p_mat, s_mat, attr = 'course'))
-  di_mat <- flip_scores(get_match_score(p_mat, s_mat, attr = 'discipline'))
+  dt_mat <- round(flip_scores(get_match_score(p_mat, s_mat, attr = 'datatype')), 2)
+  sk_mat <- round(flip_scores(get_match_score(p_mat, s_mat, attr = 'skill')), 2)
+  co_mat <- round(flip_scores(get_match_score(p_mat, s_mat, attr = 'course')), 2)
+  di_mat <- round(flip_scores(get_match_score(p_mat, s_mat, attr = 'discipline')), 2)
 
 
   proj_matches <- list()
@@ -28,20 +28,20 @@ identify_top_matches <- function(p_mat, s_mat, cutoff){
     dt_proj <- dt_mat[rownames(dt_mat) == proj, ]
     # Take 'top' scores. Right now score is 1 (highest) to 3 (lowest).
     # Eliminating anything greater than or equal to 2
-    dt_min_score <- dt_proj[dt_proj < cutoff]
-    dt_best_s <- names(dt_proj[dt_proj < cutoff])
+    dt_min_score <- dt_proj[dt_proj >= cutoff]
+    dt_best_s <- names(dt_proj[dt_proj >= cutoff])
 
     sk_proj <- sk_mat[rownames(sk_mat) == proj, ]
-    sk_min_score <- sk_proj[sk_proj < cutoff]
-    sk_best_s <- names(sk_proj[sk_proj < cutoff])
+    sk_min_score <- sk_proj[sk_proj >= cutoff]
+    sk_best_s <- names(sk_proj[sk_proj >= cutoff])
 
     co_proj <- co_mat[rownames(co_mat) == proj, ]
-    co_min_score <- co_proj[co_proj < cutoff]
-    co_best_s <- names(co_proj[co_proj < cutoff])
+    co_min_score <- co_proj[co_proj >= cutoff]
+    co_best_s <- names(co_proj[co_proj >= cutoff])
 
     di_proj <- di_mat[rownames(di_mat) == proj, ]
-    di_min_score <- di_proj[di_proj < cutoff]
-    di_best_s <- names(di_proj[di_proj < cutoff])
+    di_min_score <- di_proj[di_proj >= cutoff]
+    di_best_s <- names(di_proj[di_proj >= cutoff])
 
     ldt <- length(dt_best_s)
     lsk <- length(sk_best_s)
@@ -69,6 +69,8 @@ identify_top_matches <- function(p_mat, s_mat, cutoff){
                                             di_min_score}))
     proj_matches[[i]] <- match
   }
+
+  names(proj_matches) <- rownames(p_mat)
   return(proj_matches)
 }
 

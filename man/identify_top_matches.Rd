@@ -11,7 +11,7 @@ identify_top_matches(p_mat, s_mat, cutoff)
 
 \item{s_mat}{A matrix of student interest}
 
-\item{cutoff}{}
+\item{cutoff}{A value 0-3 identifying a lower bound threshold for selecting students. For example, selecting a cutoff value of 2 will show students with match scores >= 2 for each project. cutoff = 0 will display all students, cutoff = 3 will display only perfect matches.}
 }
 \value{
 List of projects, each of which contains a data frame with top matched students by four criteria and their scores, where scores closer to zero are better

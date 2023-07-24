@@ -1,4 +1,4 @@
-# Experience Learning Matching Workflow (`elMatch`)  
+# `elMatch`: A workflow for matching research projects and students for Experiential Learning opportunities  
 
 This package matches proposed research projects with prospective student researchers based on four match criteria:  
 
@@ -22,3 +22,4 @@ p_index <- get_project_index(project_url)
 s_index <- get_student_index(student_url)
 ```
 
+Students also take an assessment based on 
