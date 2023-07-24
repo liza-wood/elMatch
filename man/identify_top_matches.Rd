@@ -4,12 +4,14 @@
 \alias{identify_top_matches}
 \title{Identify top students for project}
 \usage{
-identify_top_matches(r_mat, s_mat)
+identify_top_matches(p_mat, s_mat, cutoff)
 }
 \arguments{
-\item{r_mat}{A matrix of research project needs}
+\item{p_mat}{A matrix of research project needs}
 
 \item{s_mat}{A matrix of student interest}
+
+\item{cutoff}{}
 }
 \value{
 List of projects, each of which contains a data frame with top matched students by four criteria and their scores, where scores closer to zero are better
@@ -18,6 +20,6 @@ List of projects, each of which contains a data frame with top matched students 
 Identify top students for project
 }
 \examples{
-proj_list <- identify_top_matches(r_mat, s_mat)
+proj_list <- identify_top_matches(p_mat, s_mat)
 
 }

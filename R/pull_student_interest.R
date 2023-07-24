@@ -40,7 +40,7 @@ pull_student_interest <- function(student_url){
   fls <- list.files('transcripts', full.names = T)
 
   # Run transcripts through transcript_to_df function to extract data
-  roxygen2::load_pkgload('R/transcript_to_df.R')
+  #roxygen2::load_pkgload('R/transcript_to_df.R')
   all_t <- data.frame()
   for(i in fls){
     df <- transcript_to_df(i)
@@ -63,14 +63,13 @@ pull_student_interest <- function(student_url){
   colnames(t_mat) <- paste0('course: ', colnames(t_mat))
 
   # Pull out IDs from Drive upload file and use those to label and pull out survey matrix
-  s$id <- t_ids
-  index <- s[,c('id', 'Email Address', 'Timestamp')]
-  s_mat <- subset(s, select = -c(id,`Email Address`, Timestamp, t_col))
+  s$id <- s$`Please enter your name in the following format: Last, First`
+  s_mat <- subset(s, select = -c(id,`Email Address`, Timestamp, t_col,
+                                 `Please enter your name in the following format: Last, First`))
   s_mat <- as.matrix(s_mat)
 
-  c_mat <- make_empty_course_matrix(s)
-
   # I want to fill it, so that relevant courses are filled
+  c_mat <- make_empty_course_matrix(s)
   for(i in 1:ncol(c_mat)){
     for(j in 1:nrow(s)){
        if(colnames(c_mat)[i] %in% course_codes$subj_code[course_codes$id == s$id[j]]){
@@ -84,7 +83,7 @@ pull_student_interest <- function(student_url){
   # Bind matrices and return
   s_mat <- cbind(s_mat, t_mat)
   s_mat <- cbind(s_mat, c_mat)
-  rownames(s_mat) <- index$id
+  rownames(s_mat) <- s$id
   return(s_mat)
 }
 

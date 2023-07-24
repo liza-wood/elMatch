@@ -4,10 +4,10 @@
 \alias{get_match_score}
 \title{Return match scores by attribute}
 \usage{
-get_match_score(r_mat, s_mat, attr)
+get_match_score(p_mat, s_mat, attr)
 }
 \arguments{
-\item{r_mat}{A matrix of research project needs}
+\item{p_mat}{A matrix of research project needs}
 
 \item{s_mat}{A matrix of student interest}
 

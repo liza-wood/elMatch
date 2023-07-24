@@ -32,3 +32,8 @@ make_empty_course_matrix <- function(x){
   colnames(c_mat) <- dept$Subject.Code
   return(c_mat)
 }
+
+flip_scores <- function(mat){
+  mat <- abs(mat-3)
+  return(mat)
+}

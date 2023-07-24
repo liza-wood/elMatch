@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
+devtools::install_github('liza-wood/elMatch')
 library(elMatch)
 ```
 
@@ -24,9 +25,15 @@ Pull in the applicant data
 
 Read in a sample transcript
 ```{r, eval = F}
-r_mat <- pull_research_needs(need url)
-s_mat <- pull_student_interest()
+student_url <- 'https://docs.google.com/spreadsheets/d/1g6y2zkolHAOrtppdSThsBkRsl3RCVa7_Nve_NEOQARc/edit?usp=sharing'
+project_url <- 'https://docs.google.com/spreadsheets/d/1oJd2JNKZ7CLTpwexepS7Ly1f19oLchWji6yRxz7X3X8/edit?resourcekey#gid=1824769055'
+p_mat <- pull_research_needs(project_url, student_url)
+s_mat <- pull_student_interest(student_url)
 
-proj_list <- identify_top_matches(r_mat, s_mat)
+proj_list <- identify_top_matches(p_mat, s_mat, cutoff = 1)
+
+p_index <- get_project_index(project_url)
+s_index <- get_student_index(student_url)
+
 ```
 

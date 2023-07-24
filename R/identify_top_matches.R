@@ -2,10 +2,11 @@
 #'
 #' @return List of projects, each of which contains a data frame with top matched students by four criteria and their scores, where scores closer to zero are better
 #'
-#' @param r_mat A matrix of research project needs
+#' @param p_mat A matrix of research project needs
 #' @param s_mat A matrix of student interest
+#' @param cutoff
 #'
-#' @examples proj_list <- identify_top_matches(r_mat, s_mat)
+#' @examples proj_list <- identify_top_matches(p_mat, s_mat)
 #'
 #' @import stringr
 #' @import dplyr
@@ -13,38 +14,34 @@
 #'
 #' @export
 
-identify_top_matches <- function(r_mat, s_mat){
-  roxygen2::load_pkgload('R/get_match_score.R')
-  dt_mat <- get_match_score(r_mat, s_mat, attr = 'datatype')
-  sk_mat <- get_match_score(r_mat, s_mat, attr = 'skill')
-  co_mat <- get_match_score(r_mat, s_mat, attr = 'course')
-  di_mat <- get_match_score(r_mat, s_mat, attr = 'discipline')
+identify_top_matches <- function(p_mat, s_mat, cutoff){
+  #roxygen2::load_pkgload('R/get_match_score.R')
+  dt_mat <- flip_scores(get_match_score(p_mat, s_mat, attr = 'datatype'))
+  sk_mat <- flip_scores(get_match_score(p_mat, s_mat, attr = 'skill'))
+  co_mat <- flip_scores(get_match_score(p_mat, s_mat, attr = 'course'))
+  di_mat <- flip_scores(get_match_score(p_mat, s_mat, attr = 'discipline'))
+
 
   proj_matches <- list()
   for(i in 1:nrow(dt_mat)){
     proj = rownames(dt_mat)[i]
     dt_proj <- dt_mat[rownames(dt_mat) == proj, ]
-    #dt_min <- dplyr::slice_min(dt_proj, 5)
-    dt_min_score <- dt_proj[dt_proj < 2]
-    dt_best_s <- names(dt_proj[dt_proj < 2])
+    # Take 'top' scores. Right now score is 1 (highest) to 3 (lowest).
+    # Eliminating anything greater than or equal to 2
+    dt_min_score <- dt_proj[dt_proj < cutoff]
+    dt_best_s <- names(dt_proj[dt_proj < cutoff])
 
     sk_proj <- sk_mat[rownames(sk_mat) == proj, ]
-    #sk_min <- round(min(sk_proj),2)
-    #sk_best_s <- names(sk_proj[sk_proj == sk_min])
-    sk_min_score <- sk_proj[sk_proj < 2]
-    sk_best_s <- names(sk_proj[sk_proj < 2])
+    sk_min_score <- sk_proj[sk_proj < cutoff]
+    sk_best_s <- names(sk_proj[sk_proj < cutoff])
 
     co_proj <- co_mat[rownames(co_mat) == proj, ]
-    #co_min <- round(min(co_proj), 2)
-    #co_best_s <- names(co_proj[co_proj == co_min])
-    co_min_score <- co_proj[co_proj < 2]
-    co_best_s <- names(co_proj[co_proj < 2])
+    co_min_score <- co_proj[co_proj < cutoff]
+    co_best_s <- names(co_proj[co_proj < cutoff])
 
     di_proj <- di_mat[rownames(di_mat) == proj, ]
-    #di_min <- round(min(di_proj), 2)
-    #di_best_s <- names(di_proj[di_proj == di_min])
-    di_min_score <- di_proj[di_proj < 2]
-    di_best_s <- names(di_proj[di_proj < 2])
+    di_min_score <- di_proj[di_proj < cutoff]
+    di_best_s <- names(di_proj[di_proj < cutoff])
 
     ldt <- length(dt_best_s)
     lsk <- length(sk_best_s)
