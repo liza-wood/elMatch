@@ -70,7 +70,10 @@ pull_research_needs <- function(project_url, student_url){
   ## This is the score assigned to the project's per course
   p$dummy <- 3
   p <- tidyr::pivot_wider(p, names_from = pref_course, values_from = dummy)
-  p <- subset(p, select = -`course: NA`)
+  nacol <- unique(stringr::str_detect(colnames(p), 'course: NA'))
+  if(length(nacol) == 1 & nacol == T){
+    p <- subset(p, select = -`course: NA`)
+  }
   c_cols <- stringr::str_which(colnames(p), 'course')
   p[,c_cols] <- sapply(p[,c_cols], function(x) ifelse(is.na(x), 0, x))
 

@@ -26,10 +26,14 @@ p_index <- get_project_index(project_url)
 s_index <- get_student_index(student_url)
 ```
 
-Students also take an assessment based on what they filled out in their Google Form. The conditional features of Google Forms is really weak, meaning that I couldn't build in the assessments directly into the initial survey. Instead, I've written a function to email students with the relevant skill tests.
+Students will also be directed to take an assessment based on what they filled out in interest form. The conditional features of Google Forms is really weak, meaning that I couldn't build in the assessments directly into the initial survey. Instead, I've written a function to email students with the relevant skill tests.
 
 ```
 email_assessments(sender = [AUTHENTICATED EMAIL ADDRESS])
 ```
 
-Ongoing: Pulling in assessments as a further metric
+TODO: 
+* Function that gets results from assess and grades them
+* Match those score back to students to provide an additional metric for matching
+
+contact: l.wood3@exeter.ac.uk

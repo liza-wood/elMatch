@@ -43,7 +43,8 @@ get_match_score <- function(p_mat, s_mat, attr){
           mat[i,j] <- NA
         }
         # This checks for courses to see if any align. if so:
-        if(T %in% (names(r_needs) %in% colnames(s_dt))){
+        s_dt_omit <- na.omit(s_dt[i,])
+        if(T %in% (names(r_needs) %in% colnames(s_dt_omit))){
           s_offers <- s_dt[j,names(r_needs)]
           score = r_needs - s_offers
           avg_score <- sum(score)/length(r_needs)
