@@ -23,7 +23,7 @@ get_match_score <- function(p_mat, s_mat, attr){
   }
 
   mat <- matrix(NA, nrow = nrow(p_dt), ncol = nrow(s_dt))
-  if(attr %in% c('datatype', 'skill', 'discipline')){
+  if(attr %in% c('datatype', 'skill')){
     for(i in 1:nrow(p_dt)){
       for(j in 1:nrow(s_dt)){
         r_needs <- p_dt[i,]
