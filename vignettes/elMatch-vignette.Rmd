@@ -38,12 +38,13 @@ proj_list[[2]]
 ```
 
 We can also pull out a dictionary of all students and projects. 
-```{r, eval = F}
+```{r}
 p_index <- get_project_index(project_url)
 p_index
 s_index <- get_student_index(student_url)
 s_index
 ```
+
 
 Note that the matching has NOT YET considered actual assessment. We can run this next function to send emails to each student for skills they marked as having experience in. This looks at the student index to send, and then it will update the index with a 'sent' message so that students are not repeatedly sent assessments (I hope). Or we could just make this into a Qualtrics survey with better conditionality. 
 
