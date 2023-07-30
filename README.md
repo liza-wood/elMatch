@@ -33,6 +33,7 @@ email_assessments(sender = [AUTHENTICATED EMAIL ADDRESS])
 ```
 
 TODO: 
+* See vignette for example. I don't know how to display it, honestly. 
 * Function that gets results from assess and grades them
 * Match those score back to students to provide an additional metric for matching
 
